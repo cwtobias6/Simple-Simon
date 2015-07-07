@@ -30,6 +30,8 @@
 var simonChoice = [];
 var userChoice = [];
 var allChoiceGood = true;
+var index = 0;
+
 
 //START BUTTON
 $(document).ready(function(){
@@ -48,9 +50,7 @@ var getRandomSquare = function() {
 	var randomSequence = squares[rand];
 	var simonColor = randomSequence.getAttribute("id");
 	simonChoice.push(simonColor);
-	$("#" + simonColor).fadeTo("fast", 1, function() {
-		$(this).fadeTo("fast", .25);
-	});
+	
 }
 
 //animates then pushes user's choice id to array
@@ -58,28 +58,27 @@ var animateUserSquare = function() {
 		$(this).fadeTo("fast", 1, function() {
 			$(this).fadeTo("fast",.25);
 			});
-			userChoice.push($(this).attr("id"))
-		if((userChoice.length === simonChoice.length)) {
-			for(var i = 0; i < userChoice.length; i++) {
-				if(userChoice[i] === simonChoice[i]) {
-					console.log("hey");
-					allChoiceGood = true;
-				} else {
-						allChoiceGood = false;
-						alert("You Lose");
+			userChoice.push($(this).attr("id"));
+		if(($(this).attr("id") === simonChoice[index]) && allChoiceGood) {
+				index++;
+				if(index === simonChoice.length) {
+					playSimon();
+					index=0;
 				}
-			}
-			if(allChoiceGood) {
-				playSimon();
-			}
+				
+		} else {
+	           allChoiceGood = false;
+	           index = 0;
+	           alert("WHoops, Try Again");
+	           // $(".buttonColor").off();
+
 		} 
 	}
 
-//Randomizes Simon's Choice and pushes id array; then animates simon's choice
-var animateSimonChoice = function() {
-	getRandomSquare();
-	$(this).fadeTo("fast", 1, function() {
-		$(this).fadeTo("fast",.25);
+
+var animateSimonChoice = function(currentChoice) {
+		$("#" + currentChoice).fadeTo("fast", 1, function() {
+			$(this).fadeTo("fast", .25);
 		});
 }
 
@@ -87,17 +86,33 @@ var animateSimonChoice = function() {
 //Simon's sequence playing
 var playSimon = function() {
 	var i = 0;
+	getRandomSquare();
 	var intervalID = setInterval(function() {
 		if (i >= simonChoice.length) {
 			clearInterval(intervalID);
 		}
 		animateSimonChoice(simonChoice[i]);
 		i += 1;
-	},500);
+	},750);
 }
 
 
 
+
+// if((userChoice.length === simonChoice.length)) {
+// 			for(var i = 0; i < userChoice.length; i++) {
+// 				if(userChoice[i] === simonChoice[i]) {
+// 					console.log("hey");
+// 					allChoiceGood = true;
+// 				} else {
+// 						allChoiceGood = false;
+// 						alert("You Lose");
+// 				}
+// 			}
+// 			if(allChoiceGood) {
+// 				playSimon();
+// 			}
+// 		} 
 
 
 
