@@ -3,18 +3,52 @@ h1 {
 	text-align: center;
 }
 
+main {
+	margin-left:auto; 
+	margin-right:auto;
+	text-align: center;
+	height: 600px;
+	width: 600px;
+
+}
+
+#container{
+	background-color:white;
+	border: 1px solid black;
+	width:500px;
+	height:500px;
+	margin: 50px;
+}
+
+.buttonColor {
+	width: 200px;
+	height: 200px;
+	margin-left:33px;
+	margin-top:33px;
+	float:left;
+	opacity:0.30;
+}
+
+.bright {
+	opacity:1;
+}
+
 #green{
 	background-color:green;
+
 }
 
 #red{
-	background-color:red;	
+	background-color:red;
+
 }
 
 #yellow{
 	background-color:yellow;
+
 }
 
 #blue{
 	background-color:blue;
+
 }
