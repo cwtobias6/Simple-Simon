@@ -15,13 +15,10 @@
 			<div class="buttonColor" id="blue"></div>
 		</div>
 		<button id="startButton">Start</button>
+		<div>
+			<h2>Max Streak:<span id="display" value=""></span></h2>
+		</div>
 	</main>
-
-
-
-
-
-
 
 
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -29,8 +26,10 @@
 	"use strict";
 var simonChoice = [];
 var userChoice = [];
-var allChoiceGood = true;
 var index = 0;
+var display = document.getElementById("display");
+display.value = simonChoice;
+console.log(display.value);
 
 
 //START BUTTON
@@ -55,25 +54,26 @@ var getRandomSquare = function() {
 
 //animates then pushes user's choice id to array
 var animateUserSquare = function() {
-		$(this).fadeTo("fast", 1, function() {
-			$(this).fadeTo("fast",.25);
-			});
-			userChoice.push($(this).attr("id"));
-		if(($(this).attr("id") === simonChoice[index]) && allChoiceGood) {
-				index++;
-				if(index === simonChoice.length) {
-					playSimon();
-					index=0;
-				}
+	$(this).fadeTo("fast", 1, function() {
+		$(this).fadeTo("fast",.25);
+	});
+	userChoice.push($(this).attr("id"));
+	
+	if($(this).attr("id") === simonChoice[index]) {
+		index++;
+		if(index === simonChoice.length) {
+			playSimon();
+			index = 0;
+		}
 				
-		} else {
-	           allChoiceGood = false;
-	           index = 0;
-	           alert("WHoops, Try Again");
-	           // $(".buttonColor").off();
-
-		} 
+	} else {
+       index = 0;
+       confirm("Whoops, Try Again");
+       userChoice = [];
+       simonChoice = [];
+       // $(".buttonColor").off();
 	}
+}
 
 
 var animateSimonChoice = function(currentChoice) {
@@ -95,28 +95,6 @@ var playSimon = function() {
 		i += 1;
 	},750);
 }
-
-
-
-
-// if((userChoice.length === simonChoice.length)) {
-// 			for(var i = 0; i < userChoice.length; i++) {
-// 				if(userChoice[i] === simonChoice[i]) {
-// 					console.log("hey");
-// 					allChoiceGood = true;
-// 				} else {
-// 						allChoiceGood = false;
-// 						alert("You Lose");
-// 				}
-// 			}
-// 			if(allChoiceGood) {
-// 				playSimon();
-// 			}
-// 		} 
-
-
-
-
 
 
 </script>
