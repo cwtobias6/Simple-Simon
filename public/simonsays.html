@@ -6,13 +6,16 @@
 
 </head>
 <body>
-	<h1>Simon Says</h1>
-	<div id="container">
-		<div id="green">
-		<div id="red"></div>
-		<div id="yellow"></div>
-		<div id="blue"></div>
-	</div>
+	<h1>Simon Says...</h1>
+	<main>
+		<div id="container">
+			<div class="buttonColor" id="green"></div>
+			<div class="buttonColor" id="red"></div>
+			<div class="buttonColor" id="yellow"></div>
+			<div class="buttonColor" id="blue"></div>
+		</div>
+		<button id="startButton">Start</button>
+	</main>
 
 
 
@@ -23,6 +26,48 @@
 
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
+
+var simonChoice = [];
+var userChoice = [];
+
+//START BUTTON
+$(document).ready(function(){
+	$("#startButton").click(function() {
+		getRandomSquare();
+		$("").fadeTo("fast", 1, function() {
+			$(this).fadeTo("fast",.25);
+		})
+	});
+
+});
+
+
+//USER CLICK
+$(document).ready(function(){
+	$(".buttonColor").click(function() {
+		$(this).fadeTo("fast", 1, function() {
+			$(this).fadeTo("fast",.25);
+			userChoice.push($(this).attr("id"))
+		})
+	});
+
+});
+
+
+
+//Simon Chooses Random Color
+var getRandomSquare = function() {
+	var squares = $(".buttonColor");
+	var rand = Math.floor(Math.random() * 4);
+	var randomSequence = squares[rand];
+	var simonColor = randomSequence.getAttribute("id");
+	simonChoice.push(simonColor);
+}
+
+
+
+
+
 
 
 
