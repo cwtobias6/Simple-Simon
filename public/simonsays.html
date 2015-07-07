@@ -26,34 +26,20 @@
 
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
-
+	"use strict";
 var simonChoice = [];
 var userChoice = [];
+var allChoiceGood = true;
 
 //START BUTTON
 $(document).ready(function(){
-	$("#startButton").click(function() {
-		getRandomSquare();
-		$("").fadeTo("fast", 1, function() {
-			$(this).fadeTo("fast",.25);
-		})
-	});
-
+	$("#startButton").click(playSimon);
 });
-
 
 //USER CLICK
 $(document).ready(function(){
-	$(".buttonColor").click(function() {
-		$(this).fadeTo("fast", 1, function() {
-			$(this).fadeTo("fast",.25);
-			userChoice.push($(this).attr("id"))
-		})
-	});
-
+	$(".buttonColor").click(animateUserSquare);
 });
-
-
 
 //Simon Chooses Random Color
 var getRandomSquare = function() {
@@ -62,9 +48,53 @@ var getRandomSquare = function() {
 	var randomSequence = squares[rand];
 	var simonColor = randomSequence.getAttribute("id");
 	simonChoice.push(simonColor);
+	$("#" + simonColor).fadeTo("fast", 1, function() {
+		$(this).fadeTo("fast", .25);
+	});
+}
+
+//animates then pushes user's choice id to array
+var animateUserSquare = function() {
+		$(this).fadeTo("fast", 1, function() {
+			$(this).fadeTo("fast",.25);
+			});
+			userChoice.push($(this).attr("id"))
+		if((userChoice.length === simonChoice.length)) {
+			for(var i = 0; i < userChoice.length; i++) {
+				if(userChoice[i] === simonChoice[i]) {
+					console.log("hey");
+					allChoiceGood = true;
+				} else {
+						allChoiceGood = false;
+						alert("You Lose");
+				}
+			}
+			if(allChoiceGood) {
+				playSimon();
+			}
+		} 
+	}
+
+//Randomizes Simon's Choice and pushes id array; then animates simon's choice
+var animateSimonChoice = function() {
+	getRandomSquare();
+	$(this).fadeTo("fast", 1, function() {
+		$(this).fadeTo("fast",.25);
+		});
 }
 
 
+//Simon's sequence playing
+var playSimon = function() {
+	var i = 0;
+	var intervalID = setInterval(function() {
+		if (i >= simonChoice.length) {
+			clearInterval(intervalID);
+		}
+		animateSimonChoice(simonChoice[i]);
+		i += 1;
+	},500);
+}
 
 
 
